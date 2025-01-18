@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+// создаём тип данных для матриц
 type Matrix [][]float64
 
 func (m Matrix) Rows() int {
