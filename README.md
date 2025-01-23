@@ -8,6 +8,6 @@
 
 [Gauss_parallel.go](Gauss_parallel.go) - многопоточная реализация метода Гаусса
 
-Cramer_usual.go - однопоточная реализация метода Крамера
+[Cramer_usual.go](Cramer_usual.go) - однопоточная реализация метода Крамера
 
-Cramer_parallel.go - многопоточная реализация метода Крамера
+[Cramer_parallel.go](Cramer_parallel.go) - многопоточная реализация метода Крамера
