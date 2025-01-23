@@ -11,3 +11,5 @@
 [Cramer_usual.go](Cramer_usual.go) - однопоточная реализация метода Крамера
 
 [Cramer_parallel.go](Cramer_parallel.go) - многопоточная реализация метода Крамера
+
+[Enigma.go](Enigma.go) - реализация трёхроторной Энигмы
