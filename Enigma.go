@@ -10,6 +10,11 @@ var config0 = [3]rune{'c', 'f', 'w'}
 // конфигурация, которая будет меняться при сдвигах
 var config = [3]rune{'c', 'f', 'w'}
 
+// проверка на то, является ли символ буквой латинского алфавита
+func isLetter(a rune) bool {
+	return (a >= 'a') && (a <= 'z')
+}
+
 // функция сдвига буквы по модулю 26
 func add(a rune, b int) rune {
 	if b < 0 {
@@ -67,6 +72,9 @@ func main() {
 	fmt.Print("Шифр для строки : ")
 	for c := range s {
 		res = rune(s[c])
+		if !isLetter(res) {
+			continue
+		}
 		for i := 0; i < 3; i++ {
 			res = rotor(i, res, true)
 		}
