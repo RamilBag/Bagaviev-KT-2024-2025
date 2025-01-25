@@ -28,13 +28,6 @@ def extract_frames(video_path, output_folder):
 
 app = FastAPI()
 
-@app.post("/file/upload-file")
-def upload_file(file: UploadFile):
-    if file.content_type.partition("/")[0] != "image" or file.content_type.partition("/")[0] != "video":
-        return {"message": "Invalid document type"}   
-        #raise HTTPException(400, detail="Invalid document type")
-    return {"filename": file.filename}
-
 @app.put("/api/files")
 def upload_file(file: UploadFile):
     if file.content_type.partition("/")[0] != "image" and file.content_type.partition("/")[0] != "video":
