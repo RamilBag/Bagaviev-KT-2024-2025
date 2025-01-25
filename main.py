@@ -31,8 +31,8 @@ app = FastAPI()
 @app.put("/api/files")
 def upload_file(file: UploadFile):
     if file.content_type.partition("/")[0] != "image" and file.content_type.partition("/")[0] != "video":
-        return {"message": "Invalid document type"}
-        #raise HTTPException(400, detail="Invalid document type")
+        #return {"message": "Invalid document type"}
+        raise HTTPException(400, detail="Invalid document type")
     #return FileResponse(file, filename=file.filename, media_type=file.content_type)
     try:
         file_id = uuid.uuid4()
