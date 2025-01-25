@@ -14,40 +14,19 @@ import subprocess
 import os
 
 def extract_frames(video_path, output_folder):
-    """
-    Extract frames from a video using FFmpeg.
-    
-    :param video_path: Path to the input video file.
-    :param output_folder: Folder where the extracted frames will be saved.
-    :param frame_rate: Frame rate for extraction (frames per second).
-    """
-    # Ensure the output folder exists
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
     
-    # FFmpeg command to extract frames
     command = [
-        #ffmpeg -i inputfile.mkv -vf "select=eq(n\,0)" -q:v 3 output_image.jpg
-        #ffmpeg -i input.mp4 -frames:v 1 first.jpg
-        #ffmpeg -ss 00:00:04 -i input.mp4 -frames:v 1 screenshot.png
         'ffmpeg',
         '-ss', '00:00:00', '-i', video_path,              # Input file
         '-frames:v', '1',    # Video filter to set frame rate
         os.path.join(output_folder, 'frame_%04d.png')  # Output file pattern
     ]
     
-    # Run the command
     subprocess.run(command, check=True)
 
-# Example usage
-#video_path = 'input_video.mp4'  # Path to your video file
-#output_folder = 'frames'        # Folder to save frames
-#extract_frames(video_path, output_folder, frame_rate=1)
-
 app = FastAPI()
-@app.get("/sum")
-async def sum(a: int, b: int):
-    return {a+b}
 
 @app.post("/file/upload-file")
 def upload_file(file: UploadFile):
