@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+	"io"
+	"os"
+	"unicode"
 )
 
 // исходная конфигурация трёх роторов
@@ -10,8 +13,8 @@ var config0 = [3]rune{'c', 'f', 'w'}
 // конфигурация, которая будет меняться при сдвигах
 var config = [3]rune{'c', 'f', 'w'}
 
-// проверка на то, является ли символ буквой латинского алфавита
-func isLetter(a rune) bool {
+// проверка на то, является ли символ (строчной) буквой латинского алфавита
+func isLowerLetter(a rune) bool {
 	return (a >= 'a') && (a <= 'z')
 }
 
@@ -65,15 +68,45 @@ func shift() {
 
 func main() {
 	var str string
-	fmt.Print("Введите строку : ")
-	fmt.Scan(&str)
-	s := []rune(str)
+
 	res := 'a'
-	fmt.Print("Шифр для строки : ")
+	ans := ""
+	file, err := os.Open("/Users/ramilbagaviev/Downloads/Golang/Enigma/readFile/input.txt")
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	defer file.Close()
+
+	data := make([]byte, 64)
+
+	for {
+		n, err := file.Read(data)
+		if err == io.EOF { // если конец файла
+			break // выходим из цикла
+		}
+		str += string(data[:n])
+	}
+
+	s := []rune(str)
+	isLower := false
+
+	ffile, errr := os.OpenFile("/Users/ramilbagaviev/Downloads/Golang/Enigma/readFile/output.txt", os.O_APPEND|os.O_WRONLY, 0644)
+	if errr != nil {
+		fmt.Println("Unable to open file:", errr)
+		os.Exit(1)
+	}
+	defer ffile.Close()
+
 	for c := range s {
 		res = rune(s[c])
-		if !isLetter(res) {
-			continue
+		isLower = true
+		if !isLowerLetter(res) {
+			if !isLowerLetter(unicode.ToLower(res)) {
+				continue
+			}
+			isLower = false
+			res = unicode.ToLower(res)
 		}
 		for i := 0; i < 3; i++ {
 			res = rotor(i, res, true)
@@ -83,7 +116,13 @@ func main() {
 			res = rotor(i, res, false)
 		}
 		shift()
+		if !isLower {
+			res = unicode.ToUpper(res)
+		}
 		fmt.Print(string(res))
+		ans += string(res)
 	}
 	fmt.Println()
+	ffile.WriteString(ans)
 }
+
