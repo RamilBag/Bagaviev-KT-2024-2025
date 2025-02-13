@@ -67,7 +67,6 @@ async def read_id(s_id: str, a: Optional[int] = None, b: Optional[int] = None):
                 if filetype == "video":
                     extract_frames(f"/Users/ramilbagaviev/Downloads/Python/TestFiles/{nameOfFile}", f"/Users/ramilbagaviev/Downloads/Python/TestFiles")
                     return {"first_frame": Image.open(f"/Users/ramilbagaviev/Downloads/Python/TestFiles/frame_0001.png").show()}
-                    return av.open(f"/Users/ramilbagaviev/Downloads/Python/TestFiles/{nameOfFile}").streams.video[0].frames
             line = file.readline()
     raise HTTPException(404, detail="No such file")
     #return {"message": "No such file"}  
