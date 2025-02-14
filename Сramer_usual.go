@@ -82,6 +82,10 @@ func (m Matrix) Det() (float64, error) {
 			m.IsMatrix(), m.IsSquare())
 	}
 
+	if m.Rows() == 1 {
+		return m[0][0], nil
+	}
+
 	if m.Rows() == 2 {
 		return m[0][0]*m[1][1] - m[0][1]*m[1][0], nil
 	}
