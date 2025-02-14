@@ -90,7 +90,7 @@ func (m Matrix) Det() (float64, error) {
 		return m[0][0]*m[1][1] - m[0][1]*m[1][0], nil
 	}
 
-	// исключаем первый столбец
+	// исключаем первую строку
 	partial_matrix, err := m.ExcludeRow(1)
 	if err != nil {
 		return -1, err
@@ -98,7 +98,7 @@ func (m Matrix) Det() (float64, error) {
 
 	var temp float64 = 0
 
-	// раскладываем по элементам первого столбца
+	// раскладываем по элементам первой строки
 	for i, el := range m[0] {
 
 		reduced_matrix, err := partial_matrix.ExcludeColumn(i + 1)
