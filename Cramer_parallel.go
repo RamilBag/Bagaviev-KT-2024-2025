@@ -100,7 +100,7 @@ func (m Matrix) Det() (float64, error) {
 
 	var temp float64 = 0
 
-	// раскладываем по элементам первого столбца
+	// раскладываем по элементам первой строки
 	for i, el := range m[0] {
 
 		reduced_matrix, err := partial_matrix.ExcludeColumn(i + 1)
