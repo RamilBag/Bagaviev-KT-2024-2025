@@ -46,11 +46,11 @@ def upload_file(file: UploadFile):
     return {"file_id": file_id, "filename": file.filename, "mime": file.content_type, "file_size": file.file._max_size}
 
 @app.put("/api/files/{uuid}") #/api/files/{uuid}?width&height
-async def read_id(s_id: str, a: Optional[int] = None, b: Optional[int] = None):
+async def read_id(uuid: str, width: Optional[int] = None, height: Optional[int] = None):
     with open(f"/Users/ramilbagaviev/Downloads/Python/file_id_name.txt", "r") as file:
         line = file.readline()
         while line:
-            if line.partition(" ")[0] == s_id:
+            if line.partition(" ")[0] == uuid:
                 nameOfFile = line.partition(" ")[2].rstrip()
                 #mime = magic.Magic(mime=True)
                 #filetype = magic.from_file(f"/Users/ramilbagaviev/Downloads/Python/TestFiles/{nameOfFile}").partition("/")[0]
@@ -59,9 +59,9 @@ async def read_id(s_id: str, a: Optional[int] = None, b: Optional[int] = None):
                 filetype = mime.guess_type(url)[0].partition("/")[0]
                 #return filetype
                 if filetype == "image":
-                    if a == None or b == None:
+                    if width == None or height == None:
                         return {"upd_file": Image.open(f"/Users/ramilbagaviev/Downloads/Python/TestFiles/{nameOfFile}").show()}
-                    return {"upd_file": Image.open(f"/Users/ramilbagaviev/Downloads/Python/TestFiles/{nameOfFile}").resize((a,b)).show()}
+                    return {"upd_file": Image.open(f"/Users/ramilbagaviev/Downloads/Python/TestFiles/{nameOfFile}").resize((width,height)).show()}
                 #return FileResponse(path=f"/Users/ramilbagaviev/Downloads/Python/TestFiles/{nameOfFile}", filename=nameOfFile, media_type='multipart/form-data')
                 #return {"filename": line.partition(" ")[2].rstrip()}
                 if filetype == "video":
