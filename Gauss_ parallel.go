@@ -30,12 +30,9 @@ func main() {
 
 	start := time.Now()
 
-	y := make([][]float64, n)
+	y := make([]float64, n)
 	for i := range a {
-		y[i] = make([]float64, n)
-		for j := 0; j < n; j++ {
-			y[i][j] = 0.0
-		}
+		y[i] = 0.0
 	}
 
 	index := 0
@@ -66,11 +63,11 @@ func main() {
 		if j <= i {
 			return
 		}
-		y[i][j] = a[j][i] / a[i][i]
+		y[j] = a[j][i] / a[i][i]
 		for k := i; k < n; k++ {
-			a[j][k] -= (a[i][k] * y[i][j])
+			a[j][k] -= (a[i][k] * y[j])
 		}
-		b[j] -= (b[i] * y[i][j])
+		b[j] -= (b[i] * y[j])
 	}
 
 	work_back := func(i int, j int) {
@@ -78,11 +75,11 @@ func main() {
 		if j >= i {
 			return
 		}
-		y[i][j] = a[j][i]
+		y[j] = a[j][i]
 		for k := 0; k < n; k++ {
-			a[j][k] -= (a[i][k] * y[i][j])
+			a[j][k] -= (a[i][k] * y[j])
 		}
-		b[j] -= (b[i] * y[i][j])
+		b[j] -= (b[i] * y[j])
 	}
 
 	// Прямой ход
