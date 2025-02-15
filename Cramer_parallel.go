@@ -195,12 +195,11 @@ func main() {
 	wg.Add(n)
 	work := func(i int) {
 		defer wg.Done()
-		det, err = Matrix(dets[i]).Det()
+		res[i], err = Matrix(dets[i]).Det()
 		if err != nil {
 			log.Fatalf("Error in calculating the determinant: %v", err)
 		}
-		fmt.Println(det)
-		res[i] = det / mainDet
+		res[i] /= mainDet
 	}
 
 	for i := 0; i < n; i++ {
